@@ -1,6 +1,6 @@
 import streamlit as st
 st.button('Hit me')
-st.checkbox('Check me out')
+st.checkbox('Check me out',['1','2','3'])
 st.radio('Pick one:', ['nose','ear'])
 st.selectbox('Select', [1,2,3])
 st.multiselect('Multiselect', [1,2,3])
