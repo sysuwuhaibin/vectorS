@@ -3,6 +3,7 @@ from milvus_utility import MilvusUtility
 from openai_utility import ChatBot
 import openai
 import numpy as np
+import os
 import configparser
 import logging
 
