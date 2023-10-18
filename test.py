@@ -60,8 +60,8 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
             contexts1 = [" 候选结果" + str(i + 1) + "   相关度:" + str(1 - item.distance) + " =======================\n" + \
                          '【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
-            contexts = ['\n【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
-                'description') + '\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
+            contexts = ['\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
+                'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
             prompt_final['system'] = ' '.join(contexts)
