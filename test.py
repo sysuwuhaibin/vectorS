@@ -78,7 +78,7 @@ openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
 
 # Display or clear chat messages
 for message in st.session_state.messages:
@@ -110,7 +110,7 @@ def chat(text):
 # Generate a new response if last message is not from assistant
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+        with st.spinner("正在思考中..."):
             embedding_res = ChatBot().generate_embedding(prompt)
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
             print(prompt_final)
