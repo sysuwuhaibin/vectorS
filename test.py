@@ -113,15 +113,14 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             embedding_res = ChatBot().generate_embedding(prompt)
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
-            if prompt_final is not None and result is not None:
-                print(prompt_final)
-                completion = ChatBot().interact_with_llm(prompt_final)
-                response = prompt_final['system'] + completion
-                placeholder = st.empty()
-                full_response = ''
-                for item in response:
-                    full_response += item
-                    placeholder.markdown(full_response)
+            print(prompt_final)
+            completion = ChatBot().interact_with_llm(prompt_final)
+            response = prompt_final['system'] + completion
+            placeholder = st.empty()
+            full_response = ''
+            for item in response:
+                full_response += item
                 placeholder.markdown(full_response)
-        message = {"role": "assistant", "content": full_response}
-        st.session_state.messages.append(message)
+            placeholder.markdown(full_response)
+    message = {"role": "assistant", "content": full_response}
+    st.session_state.messages.append(message)
