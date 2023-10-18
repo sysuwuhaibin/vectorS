@@ -1,6 +1,50 @@
 import streamlit as st
+from milvus_utility import MilvusUtility
+from openai_utility import ChatBot
 import openai
 import numpy as np
+
+# 预处理提示的函数
+def preprocess_prompt(promt_embedding_res, text, namespace):
+    try:
+        prompt_final = {
+            "system": '',
+            "user": ''
+        }
+        if config.get('Model', 'selected_model') == 'Pinecone':
+            prompt_res = PineconeUtility().query_pinecone(promt_embedding_res, namespace)
+            logger.info("从Pinecone知识库中检索相关内容：完成")
+            # 重新构造提示
+            contexts1 = ["\n【相关度】" + str(item['score']) + "\n【候选结果" + str(i + 1) + "】\n" + item['metadata'][
+                'data'].lstrip('') for
+                         i, item in enumerate(prompt_res['matches'])]
+            contexts = [item['metadata']['data'] for item in prompt_res['matches']]
+            result = "\n【查询问题】 " + text + "\n===================================================" + \
+                     "\n===================================================".join(contexts1) + "\n"
+            prompt_final['system'] = ''.join(contexts)
+            prompt_final['user'] = text
+            logger.info("重新构造提示：完成")
+        elif config.get('Model', 'selected_model') == 'Milvus':
+            Milvus_TOP_K = config.getint('Milvus', 'top_k')
+            prompt_res = MilvusUtility().search_entity("GUIHUAZHIXUN", promt_embedding_res)
+            print(prompt_res)
+            logger.info("从Milvus知识库中检索相关内容：完成")
+            # 重新构造提示
+            contexts1 = [" 候选结果" + str(i + 1) + "   相关度:" + str(1 - item.distance) + " =======================\n" + \
+                         '【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
+                'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
+            contexts = ['\n【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
+                'description') + '\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
+            result = "\n【查询问题】 " + text + "\n=======================" + \
+                     "\n=======================".join(contexts1) + "\n\n"
+            prompt_final['system'] = ' '.join(contexts)
+            prompt_final['user'] = text
+            logger.info("重新构造提示：完成")
+        return prompt_final, result
+
+    except Exception as e:
+        logger.error("预处理提示时出现异常:", str(e))
+        return None, None
 
 openai.api_base = "http://ai.hellopas.com:3000/v1"
 openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
@@ -40,7 +84,12 @@ def chat(text):
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = chat(prompt)
+            embedding_res = ChatBot().generate_embedding(prompt)
+            prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
+            if prompt_final is not None and result is not None:
+                print(prompt_final)
+                completion = ChatBot().interact_with_llm(prompt_final)
+                response = prompt_final['system'] + completion
             placeholder = st.empty()
             full_response = ''
             for item in response:
