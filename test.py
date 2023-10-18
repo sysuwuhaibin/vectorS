@@ -18,20 +18,34 @@ def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
-message = st.chat_message("assistant")
-message.write("Hello human")
 
-prompt = st.chat_input("Say something")
+prompt = st.chat_input("请输入")
 if prompt:
+    st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.write(prompt)
 
+def chat(text):
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role': 'user', 'content': prompt}
+            {'role': 'user', 'content': text}
         ],
         temperature=0
     )
-    message = st.chat_message("assistant")
-    message.write(response.choices[0].message.content)
+
+    return response.choices[0].message.content
+
+# Generate a new response if last message is not from assistant
+if st.session_state.messages[-1]["role"] != "assistant":
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            response = chat(prompt)
+            placeholder = st.empty()
+            full_response = ''
+            for item in response:
+                full_response += item
+                placeholder.markdown(full_response)
+            placeholder.markdown(full_response)
+    message = {"role": "assistant", "content": full_response}
+    st.session_state.messages.append(message)
