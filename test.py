@@ -26,7 +26,7 @@ with st.sidebar:
         openai_api = st.secrets['OPENAI_API_TOKEN']
     else:
         openai_api = st.text_input('请输入OPENAI API KEY:', type='password')
-        if not (openai_api.startswith('sk_') and len(openai_api)==51):
+        if not (openai_api.startswith('sk-') and len(openai_api)==51):
             st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
         else:
             st.success('正在处理你输入的key！', icon='👉')
