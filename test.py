@@ -61,9 +61,9 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                          '【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合你的建议。"]
-            if float(1 - item.distance) > 0.8:
-                contexts = ['\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
-                'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
+            if float(1 - prompt_res[0][0].distance) > 0.8:
+                contexts = ['\n【推荐度】' + str(1 - item.distance) + '\n\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
+                    'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
             prompt_final['system'] = ' '.join(contexts)
@@ -115,7 +115,6 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("正在思考中..."):
             embedding_res = ChatBot().generate_embedding(prompt)
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
-            print(prompt_final)
             completion = ChatBot().interact_with_llm(prompt_final)
             response = prompt_final['system'] + '\n\n' + completion
             placeholder = st.empty()
