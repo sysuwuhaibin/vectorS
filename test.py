@@ -20,7 +20,7 @@ if prompt:
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role': 'user', 'content': '你吃饭了吗'}
+            {'role': 'user', 'content': prompt}
         ],
         temperature=0
     )
