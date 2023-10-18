@@ -20,7 +20,7 @@ with st.sidebar:
             st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
         else:
             st.success('正在处理你输入的key!', icon='👉')
-    os.environ['OPENAI_API_TOKEN'] = replicate_api
+    os.environ['OPENAI_API_TOKEN'] = openai_api
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # 创建日志记录器
