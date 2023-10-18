@@ -1,6 +1,5 @@
 import streamlit as st
 import openai
-import time
 import numpy as np
 
 openai.api_base = "http://ai.hellopas.com:3000/v1"
@@ -31,7 +30,6 @@ collected_chunks = []
 collected_messages = []
 # iterate through the stream of events
 for chunk in response:
-    chunk_time = time.time() - start_time  # calculate the time delay of the chunk
     collected_chunks.append(chunk) 
     chunk_message = chunk['choices'][0]['delta']  # extract the message
     collected_messages.append(chunk_message)  # save the message
