@@ -115,7 +115,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
             print(prompt_final)
             completion = ChatBot().interact_with_llm(prompt_final)
-            response = prompt_final['system'] + completion
+            response = prompt_final['system'] + '\n\n' + completion
             placeholder = st.empty()
             full_response = response
             placeholder.text(full_response)
