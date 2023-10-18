@@ -27,8 +27,8 @@ class ChatBot:
         self.config.read('setting.ini', encoding='utf-8')
 
         # 获取Database部分的配置信息
-        openai.api_base = self.config.get('OpenAI', 'base_url')
-        openai.api_key = self.config.get('OpenAI', 'api_key')
+        openai.api_base = os.environ['OPENAI_BASE_URL']
+        openai.api_key = os.environ['OPENAI_API_TOKEN']
 
     def generate_embedding(self, text):
         try:
