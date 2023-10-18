@@ -3,6 +3,13 @@ from milvus_utility import MilvusUtility
 from openai_utility import ChatBot
 import openai
 import numpy as np
+import configparser
+
+# 创建一个ConfigParser对象
+config = configparser.ConfigParser()
+
+# 读取INI文件
+config.read('setting.ini', encoding='utf-8')
 
 # 预处理提示的函数
 def preprocess_prompt(promt_embedding_res, text, namespace):
