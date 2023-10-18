@@ -117,10 +117,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             completion = ChatBot().interact_with_llm(prompt_final)
             response = prompt_final['system'] + completion
             placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
-                placeholder.markdown(full_response)
+            full_response = response
             placeholder.markdown(full_response)
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
