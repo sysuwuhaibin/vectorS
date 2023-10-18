@@ -20,7 +20,7 @@ with st.sidebar:
         if not (openai_base_url.startswith('http') and len(openai_base_url) > 10):
             st.warning('请输入正确的OPENAI BASE URL！', icon='⚠️')
         else:
-            st.success('正在处理你输入的OPENAI BASE URL！', icon='👉')
+            st.success('OPENAI BASE URL已输入！', icon='✅')
             os.environ['OPENAI_BASE_URL'] = openai_base_url
     if 'OPENAI_API_TOKEN' in st.secrets:
         st.success('API key已经提供!', icon='✅')
@@ -30,7 +30,7 @@ with st.sidebar:
         if not (openai_api.startswith('sk-') and len(openai_api)==51):
             st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
         else:
-            st.success('正在处理你输入的key！', icon='👉')
+            st.success('OPENAI API key已输入', icon='✅')
             os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
