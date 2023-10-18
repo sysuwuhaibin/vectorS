@@ -1,6 +1,7 @@
 import configparser
 import logging
 import openai
+import os
 
 
 class ChatBot:
