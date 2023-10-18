@@ -118,6 +118,6 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response = prompt_final['system'] + '\n\n' + completion
             placeholder = st.empty()
             full_response = response
-            placeholder.text(full_response)
+            placeholder.markdown(full_response, unsafe_allow_html=True)
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
