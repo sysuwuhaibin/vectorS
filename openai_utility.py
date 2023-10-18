@@ -49,7 +49,7 @@ class ChatBot:
             completion = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": '```背景知识：' + prompt_final['system'] + '```\n\n请你根据背景知识回答我的问题，如果背景知识无法回答该问题，请回复“我不知道'},
+                    {"role": "system", "content": '```背景知识：' + prompt_final['system'] + '```\n\n请你根据背景知识回答我的问题，回答的内容使用markdown语法输出，最好能格式化，分点有条理的输出。如果背景知识无法回答该问题，请回复“我不知道”。'},
                     {"role": "user", "content": '”我的问题：' + prompt_final['user']},
                 ]
             )
