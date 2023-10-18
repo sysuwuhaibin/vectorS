@@ -1,5 +1,9 @@
 import streamlit as st
+import openai
 import numpy as np
+
+openai.api_base = "http://ai.hellopas.com:3000/v1"
+openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
 with st.chat_message("user"):
     st.write("Hello 👋")
@@ -10,4 +14,5 @@ message.write("Hello human")
 
 prompt = st.chat_input("Say something")
 if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
+    with st.chat_message("user"):
+        st.write(prompt)
