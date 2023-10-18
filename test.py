@@ -6,6 +6,8 @@ import numpy as np
 import configparser
 import logging
 
+# App title
+st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
