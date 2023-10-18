@@ -7,7 +7,21 @@ import configparser
 import logging
 
 # App title
-st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
+st.set_page_config(page_title="💬 Tiancom VectorS")
+
+with st.sidebar:
+    st.title('💬 Tiancom VectorS')
+    if 'OPENAI_API_TOKEN' in st.secrets:
+        st.success('API key已经提供!', icon='✅')
+        openai_api = st.secrets['OPENAI_API_TOKEN']
+    else:
+        openai_api = st.text_input('请输入OPENAI API KEY:', type='password')
+        if not (replicate_api.startswith('sk_') and len(replicate_api)==51):
+            st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
+        else:
+            st.success('正在处理你输入的key!', icon='👉')
+    os.environ['OPENAI_API_TOKEN'] = replicate_api
+    #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
