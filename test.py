@@ -4,6 +4,26 @@ from openai_utility import ChatBot
 import openai
 import numpy as np
 import configparser
+import logging
+
+
+# 创建日志记录器
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# 创建文件处理器
+file_handler = logging.FileHandler('app.log', encoding='utf-8')
+file_handler.setLevel(logging.INFO)
+
+# 创建日志格式器
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# 将文件处理器添加到日志记录器
+logger.addHandler(file_handler)
+
+# 创建一个ConfigParser对象
+config = configparser.ConfigParser()
 
 # 创建一个ConfigParser对象
 config = configparser.ConfigParser()
