@@ -20,10 +20,10 @@ if prompt:
 response = openai.ChatCompletion.create(
     model='gpt-3.5-turbo',
     messages=[
-        {'role': 'user', 'content': prompt}
+        {'role': 'user', 'content': '你吃饭了吗'}
     ],
     temperature=0,
-    stream=True  # this time, we set stream=True
+    stream=True
 )
 
 collected_chunks = []
