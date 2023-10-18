@@ -17,21 +17,12 @@ if prompt:
     with st.chat_message("user"):
         st.write(prompt)
 
-response = openai.ChatCompletion.create(
-    model='gpt-3.5-turbo',
-    messages=[
-        {'role': 'user', 'content': '你吃饭了吗'}
-    ],
-    temperature=0,
-    stream=True
-)
-
-collected_chunks = []
-collected_messages = []
-# iterate through the stream of events
-for chunk in response:
-    collected_chunks.append(chunk) 
-    chunk_message = chunk['choices'][0]['delta']  # extract the message
-    collected_messages.append(chunk_message)  # save the message
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[
+            {'role': 'user', 'content': '你吃饭了吗'}
+        ],
+        temperature=0
+    )
     message = st.chat_message("assistant")
-    message.write(collected_messages)
+    message.write(response.choices[0].message.content)
