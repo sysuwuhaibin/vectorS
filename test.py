@@ -16,3 +16,23 @@ prompt = st.chat_input("Say something")
 if prompt:
     with st.chat_message("user"):
         st.write(prompt)
+
+response = openai.ChatCompletion.create(
+    model='gpt-3.5-turbo',
+    messages=[
+        {'role': 'user', 'content': prompt}
+    ],
+    temperature=0,
+    stream=True  # this time, we set stream=True
+)
+
+collected_chunks = []
+collected_messages = []
+# iterate through the stream of events
+for chunk in response:
+    chunk_time = time.time() - start_time  # calculate the time delay of the chunk
+    collected_chunks.append(chunk) 
+    chunk_message = chunk['choices'][0]['delta']  # extract the message
+    collected_messages.append(chunk_message)  # save the message
+    message = st.chat_message("assistant")
+    message.write(collected_messages)
