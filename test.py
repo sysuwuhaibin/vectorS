@@ -5,9 +5,18 @@ import numpy as np
 openai.api_base = "http://ai.hellopas.com:3000/v1"
 openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
-with st.chat_message("user"):
-    st.write("Hello 👋")
-    st.write("Nice 👋")
+# Store LLM generated responses
+if "messages" not in st.session_state.keys():
+    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+
+# Display or clear chat messages
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.write(message["content"])
+
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
 message = st.chat_message("assistant")
 message.write("Hello human")
