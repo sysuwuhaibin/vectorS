@@ -1,5 +1,6 @@
 import streamlit as st
 import openai
+import time
 import numpy as np
 
 openai.api_base = "http://ai.hellopas.com:3000/v1"
