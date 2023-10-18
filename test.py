@@ -12,6 +12,15 @@ st.set_page_config(page_title="💬 Tiancom VectorS")
 
 with st.sidebar:
     st.title('💬 Tiancom VectorS')
+    if 'OPENAI_BASE_URL' in st.secrets:
+        st.success('API key已经提供!', icon='✅')
+        openai_base_url = st.secrets['OPENAI_BASE_URL']
+    else:
+        openai_base_url = st.text_input('请输入OPENAI BASE URL:', type='password')
+        if not (openai_base_url.startswith('http') and len(openai_base_url) > 10):
+            st.warning('请输入正确的OPENAI BASE URL！', icon='⚠️')
+        else:
+            st.success('正在处理你输入的OPENAI BASE URL！', icon='👉')
     if 'OPENAI_API_TOKEN' in st.secrets:
         st.success('API key已经提供!', icon='✅')
         openai_api = st.secrets['OPENAI_API_TOKEN']
@@ -20,7 +29,8 @@ with st.sidebar:
         if not (openai_api.startswith('sk_') and len(openai_api)==51):
             st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
         else:
-            st.success('正在处理你输入的key!', icon='👉')
+            st.success('正在处理你输入的key！', icon='👉')
+    os.environ['OPENAI_BASE_URL'] = openai_base_url
     os.environ['OPENAI_API_TOKEN'] = openai_api
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
