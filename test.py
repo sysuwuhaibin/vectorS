@@ -90,7 +90,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合你的建议。"]
             if float(1 - prompt_res[0][0].distance) > 0.8:
-                contexts = ['\n【推荐度】' + str(1 - item.distance) + '\n\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
+                contexts = ['\n【推荐程度】' + str(1 - item.distance) + '\n\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
                     'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
