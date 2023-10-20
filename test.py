@@ -38,7 +38,7 @@ with st.sidebar:
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "您好，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
-st.siderbar.button('清除聊天历史', on_click=clear_chat_history)
+st.sidebar.button('清除聊天历史', on_click=clear_chat_history)
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
