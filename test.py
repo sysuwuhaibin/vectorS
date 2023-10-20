@@ -16,7 +16,7 @@ with st.sidebar:
         st.success('API key已经提供!', icon='✅')
         openai_base_url = st.secrets['OPENAI_BASE_URL']
     else:
-        openai_base_url = st.text_input('请输入OPENAI BASE URL:', type='password')
+        openai_base_url = st.text_input('请输入OPENAI BASE URL:', type='text')
         if not (openai_base_url.startswith('http') and len(openai_base_url) > 10):
             st.warning('请输入正确的OPENAI BASE URL！', icon='⚠️')
         else:
