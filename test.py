@@ -116,12 +116,11 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
+
+prompt = st.chat_input("请输入")
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "您好，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
 st.button('清除聊天历史', on_click=clear_chat_history)
-
-
-prompt = st.chat_input("请输入")
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
