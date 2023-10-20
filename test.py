@@ -145,8 +145,11 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("正在思考中..."):
             embedding_res = ChatBot().generate_embedding(prompt)
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
-            completion = ChatBot().interact_with_llm(prompt_final)
-            response = prompt_final['system'] + '\n\n' + completion
+            if prompt_final is not None:
+                completion = ChatBot().interact_with_llm(prompt_final)
+                response = prompt_final['system'] + '\n\n' + completion
+            else:
+                response = '当前服务不可用，很抱歉！'
             placeholder = st.empty()
             full_response = response
             placeholder.markdown(full_response, unsafe_allow_html=True)
