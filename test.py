@@ -34,7 +34,7 @@ with st.sidebar:
             os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
-recommend_degree = st.slider('推荐程度设置：', 0, 1, 0.75)
+recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
