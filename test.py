@@ -7,9 +7,7 @@ import os
 import configparser
 import logging
 
-st.set_page_config(layout="wide")
-# App title
-st.set_page_config(page_title="💬 Tiancom VectorS")
+st.set_page_config(page_title="💬 Tiancom VectorS",layout="wide")
 
 with st.sidebar:
     st.title('💬 Tiancom VectorS')
