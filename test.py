@@ -92,7 +92,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
             contexts1 = [" 候选结果" + str(i + 1) + "   相关度:" + str(1 - item.distance) + " =======================\n" + \
                          '【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
-            contexts = ["对不起，知识库中没有符合你的建议。"]
+            contexts = ["对不起，知识库中没有符合您的问题的建议！"]
             if float(1 - prompt_res[0][0].distance) > recommend_degree:
                 contexts = ['\n【推荐程度】' + str(1 - item.distance) + '\n\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
                     'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
@@ -144,11 +144,13 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("正在思考中..."):
             embedding_res = ChatBot().generate_embedding(prompt)
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
-            if prompt_final is not None:
+            if prompt_final is not None and prompt_final['system'] != '对不起，知识库中没有符合您的问题的建议！':
                 completion = ChatBot().interact_with_llm(prompt_final)
                 response = prompt_final['system'] + '\n\n' + completion
-            else:
+            elif prompt_final is None:
                 response = '当前服务不可用，很抱歉！'
+            else:
+                response = '对不起，知识库中没有符合您的问题的建议！'
             placeholder = st.empty()
             full_response = response
             placeholder.markdown(full_response, unsafe_allow_html=True)
