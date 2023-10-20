@@ -34,6 +34,7 @@ with st.sidebar:
             os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
+recommend_degree = st.slider('推荐程度设置：', 0, 1, 0.75)
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
@@ -89,7 +90,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                          '【问题分类】' + item.entity.get('classification') + '\n【问题标题】' + item.entity.get(
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合你的建议。"]
-            if float(1 - prompt_res[0][0].distance) > 0.7:
+            if float(1 - prompt_res[0][0].distance) > recommend_degree:
                 contexts = ['\n【推荐程度】' + str(1 - item.distance) + '\n\n【问题分类】' + item.entity.get('classification') + '\n\n【问题标题】' + item.entity.get(
                     'description') + '\n\n【问题描述】' + item.entity.get('content') for item in prompt_res[0]]
             result = "\n【查询问题】 " + text + "\n=======================" + \
