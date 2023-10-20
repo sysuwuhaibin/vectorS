@@ -34,7 +34,7 @@ with st.sidebar:
             os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
-recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
+    recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
 
 # 创建日志记录器
 logger = logging.getLogger(__name__)
@@ -118,7 +118,7 @@ for message in st.session_state.messages:
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "您好，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
-st.sidebar.button('清除聊天历史', on_click=clear_chat_history)
+st.button('清除聊天历史', on_click=clear_chat_history)
 
 
 prompt = st.chat_input("请输入")
