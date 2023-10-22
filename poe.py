@@ -35,7 +35,7 @@ with st.sidebar:
     recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
 
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容情景，最好能描述诗歌内容，我就会智能给你推荐哦。"}]
 st.sidebar.button('清除聊天历史', on_click=clear_chat_history)
 
 # 创建日志记录器
@@ -111,7 +111,7 @@ openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容情景，最好能描述诗歌内容，我就会智能给你推荐哦。"}]
 
 # Display or clear chat messages
 for message in st.session_state.messages:
@@ -119,7 +119,7 @@ for message in st.session_state.messages:
         st.write(message["content"])
 
 
-prompt = st.chat_input("请输入")
+prompt = st.chat_input("请输入你心中想要的诗词的情景")
 
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -150,7 +150,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             elif prompt_final is None:
                 response = '当前服务不可用，很抱歉！'
             else:
-                response = '对不起，知识库中没有符合您的问题的建议！'
+                response = '对不起，目前收录的诗词库中没有符合您的诗词，我会再继续努力学习的！'
             placeholder = st.empty()
             full_response = response
             placeholder.markdown(full_response, unsafe_allow_html=True)
