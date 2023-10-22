@@ -6,10 +6,10 @@ import os
 import configparser
 import logging
 
-st.set_page_config(page_title="💬中华诗词小助手", layout='wide')
+st.set_page_config(page_title="💬中华诗词智能小助手", layout='wide')
 
 with st.sidebar:
-    st.title('💬 Tiancom VectorS')
+    st.title('💬中华诗词智能小助手')
     if 'BASE_URL' in st.secrets:
         st.success('Base url已经提供!', icon='✅')
         openai_base_url = st.secrets['BASE_URL']
@@ -35,7 +35,7 @@ with st.sidebar:
     recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
 
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "您好，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
 st.sidebar.button('清除聊天历史', on_click=clear_chat_history)
 
 # 创建日志记录器
@@ -111,7 +111,7 @@ openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "**您好**，我是你的规划咨询小助手VectorS，请告诉我，你们存在的问题。我将会为你指出问题的类型及其建议哦！"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
 
 # Display or clear chat messages
 for message in st.session_state.messages:
