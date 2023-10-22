@@ -32,7 +32,7 @@ with st.sidebar:
             os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
-    recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
+    recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.5)
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容情景，最好能描述诗歌内容，我就会智能给你推荐哦。"}]
