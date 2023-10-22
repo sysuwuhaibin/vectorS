@@ -11,7 +11,7 @@ st.set_page_config(page_title="💬中华诗词小助手", layout='wide')
 with st.sidebar:
     st.title('💬 Tiancom VectorS')
     if 'BASE_URL' in st.secrets:
-        st.success('API key已经提供!', icon='✅')
+        st.success('Base url已经提供!', icon='✅')
         openai_base_url = st.secrets['BASE_URL']
     else:
         openai_base_url = st.text_input('请输入OPENAI BASE URL:', type='default')
