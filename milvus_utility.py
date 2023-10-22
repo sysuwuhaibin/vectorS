@@ -108,7 +108,7 @@ class MilvusUtility:
                 "embeddings",
                 search_params,
                 limit=self.top_k,
-                output_fields=["classification", "description", "content", 'note', 'translate']
+                output_fields=["classification", "description", "content", 'note', 'translate', 'author']
             )
             self.logger.info("查询结果：完成")
             return res
