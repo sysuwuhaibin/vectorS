@@ -12,7 +12,8 @@ st.set_page_config(page_title="💬 Tiancom VectorS",layout="wide")
 with st.sidebar:
     st.title('💬 Tiancom VectorS')
     if 'OPENAI_BASE_URL' in st.secrets:
-        st.success('OPENAI_BASE_URL!{st.secrets['OPENAI_BASE_URL']}', icon='✅')
+        text = 'OPENAI_BASE_URL!' + st.secrets['OPENAI_BASE_URL']
+        st.success(text, icon='✅')
         openai_base_url = st.secrets['OPENAI_BASE_URL']
     else:
         openai_base_url = st.text_input('请输入OPENAI BASE URL:', type='default')
