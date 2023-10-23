@@ -21,7 +21,7 @@ with st.sidebar:
             st.warning('请输入正确的OPENAI BASE URL！', icon='⚠️')
         else:
             st.success('OPENAI BASE URL已输入！', icon='✅')
-            os.environ['OPENAI_BASE_URL'] = openai_base_url
+    os.environ['OPENAI_BASE_URL'] = openai_base_url
     if 'OPENAI_API_TOKEN' in st.secrets:
         st.success('API key已经提供!', icon='✅')
         openai_api = st.secrets['OPENAI_API_TOKEN']
@@ -31,7 +31,7 @@ with st.sidebar:
             st.warning('请输入正确的OPENAI API KEY！', icon='⚠️')
         else:
             st.success('OPENAI API key已输入', icon='✅')
-            os.environ['OPENAI_API_TOKEN'] = openai_api
+    os.environ['OPENAI_API_TOKEN'] = openai_api
 
     #st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
     recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.75)
