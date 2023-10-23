@@ -93,7 +93,10 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合您的问题的建议！"]
             if float(1 - prompt_res[0][0].distance) > recommend_degree:
-                contexts = ['\n```AI推荐度```\n\n' + str(1 - item.distance) + '\n\n```诗词分类```\n\n' + item.entity.get('classification') + '\n\n```诗文内容```\n\n' + item.entity.get('content').replace('。', '。\n\n') + '\n\n```译文```\n\n' + item.entity.get('translate').replace('。', '。\n\n') + '\n\n```注释```\n\n' + item.entity.get('note').replace('。', '。\n\n') + '\n\n```作者简介```\n\n' + item.entity.get('author').split('】')[1] + '\n\n```赏析```\n\n' + item.entity.get('description') for item in prompt_res[0]]
+                if prompt_res[0][0].item.entity.get('description') == '':
+                    contexts = ['\n```AI推荐度```\n\n' + str(1 - item.distance) + '\n\n```诗词分类```\n\n' + item.entity.get('classification') + '\n\n```诗文内容```\n\n' + item.entity.get('content').replace('。', '。\n\n') + '\n\n```译文```\n\n' + item.entity.get('translate').replace('。', '。\n\n') + '\n\n```注释```\n\n' + item.entity.get('note').replace('。', '。\n\n') + '\n\n```作者简介```\n\n' + item.entity.get('author').split('】')[1] + '\n\n```赏析```\n\n无' for item in prompt_res[0]]
+                else:
+                    contexts = ['\n```AI推荐度```\n\n' + str(1 - item.distance) + '\n\n```诗词分类```\n\n' + item.entity.get('classification') + '\n\n```诗文内容```\n\n' + item.entity.get('content').replace('。', '。\n\n') + '\n\n```译文```\n\n' + item.entity.get('translate').replace('。', '。\n\n') + '\n\n```注释```\n\n' + item.entity.get('note').replace('。', '。\n\n') + '\n\n```作者简介```\n\n' + item.entity.get('author').split('】')[1] + '\n\n```赏析```\n\n' + item.entity.get('description') for item in prompt_res[0]]
             logger.info(contexts)
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
