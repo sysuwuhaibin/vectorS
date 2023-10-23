@@ -97,7 +97,7 @@ class MilvusUtility:
         except Exception as e:
             self.logger.error("插入实体时出现异常:", str(e))
 
-    def search_entity(self, collection_name, query_embedding):
+    def search_entity(self, collection_name, query_embedding, output_fields_list):
         try:
             collection = Collection(name=collection_name)
             collection.load()
@@ -108,7 +108,7 @@ class MilvusUtility:
                 "embeddings",
                 search_params,
                 limit=self.top_k,
-                output_fields=["classification", "description", "content", 'note', 'translate', 'author']
+                output_fields=output_fields_list
             )
             self.logger.info("查询结果：完成")
             return res
