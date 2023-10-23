@@ -84,7 +84,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
             logger.info("重新构造提示：完成")
         elif config.get('Model', 'selected_model') == 'Milvus':
             Milvus_TOP_K = config.getint('Milvus', 'top_k')
-            prompt_res = MilvusUtility().search_entity("poe", promt_embedding_res)
+            prompt_res = MilvusUtility().search_entity("poe", promt_embedding_res, ["classification", "description", "content", 'note', 'translate', 'author'])
             print(prompt_res)
             logger.info("从Milvus知识库中检索相关内容：完成")
             # 重新构造提示
