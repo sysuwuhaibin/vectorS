@@ -151,7 +151,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             elif prompt_final is None:
                 response = '当前服务不可用，很抱歉！'
             else:
-                response = '对不起，知识库中没有符合您的问题的建议！'
+                response = '对不起，知识库中没有符合您的问题的建议。我们会继续收录您提的问题。感谢您的提问！'
             placeholder = st.empty()
             full_response = response
             placeholder.markdown(full_response, unsafe_allow_html=True)
