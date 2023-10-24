@@ -144,7 +144,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
             if prompt_final is not None and prompt_final['system'] != '对不起，知识库中没有符合您的问题的建议！':
                 completion = ChatBot().interact_with_llm(prompt_final)
-                response = prompt_final['system'] + completion 
+                response = prompt_final['system'] + completion.replace('\n', '\n>')
             elif prompt_final is None:
                 response = '当前服务不可用，很抱歉！'
             else:
