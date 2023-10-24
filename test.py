@@ -95,8 +95,8 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合您的问题的建议！"]
             if float(1 - prompt_res[0][0].distance) > recommend_degree:
-                contexts = ['\n```推荐程度```**' + str(1 - item.distance) + '**\n\n```问题分类```' + item.entity.get('classification') + '\n\n```问题标题```' + item.entity.get(
-                    'description') + '\n\n```问题描述```' + item.entity.get('content') for item in prompt_res[0]]
+                contexts = ['\n```推荐程度```**' + str(1 - item.distance) + '**\n\n```问题分类```**' + item.entity.get('classification') + '**\n\n```问题标题```**' + item.entity.get(
+                    'description') + '**\n\n```问题描述```**' + item.entity.get('content') + '**\n\n```' for item in prompt_res[0]]
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
             prompt_final['system'] = ' '.join(contexts)
@@ -144,7 +144,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             prompt_final, result = preprocess_prompt(embedding_res, prompt, namespace="dddd")
             if prompt_final is not None and prompt_final['system'] != '对不起，知识库中没有符合您的问题的建议！':
                 completion = ChatBot().interact_with_llm(prompt_final)
-                response = prompt_final['system'] + '\n\n' + completion
+                response = prompt_final['system'] + completion  + '```' 
             elif prompt_final is None:
                 response = '当前服务不可用，很抱歉！'
             else:
