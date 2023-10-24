@@ -10,7 +10,7 @@ import logging
 st.set_page_config(page_title="💬天维规划咨询助手",layout="wide")
 
 with st.sidebar:
-    st.title('💬 Tiancom VectorS')
+    st.title('💬天维规划咨询助手')
     if 'OPENAI_BASE_URL' in st.secrets:
         text = 'OPENAI_BASE_URL\n' + st.secrets['OPENAI_BASE_URL']
         st.success(text, icon='✅')
@@ -107,9 +107,6 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
     except Exception as e:
         logger.error("预处理提示时出现异常:", str(e))
         return None, None
-
-openai.api_base = "http://ai.hellopas.com:3000/v1"
-openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
