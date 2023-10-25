@@ -35,7 +35,7 @@ with st.sidebar:
     recommend_degree = st.slider('推荐程度设置：', 0.0, 1.0, 0.5)
 
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌的情景，最好能描述诗歌的真实内容和具体情境，我就会智能给你推荐哦！"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
 st.sidebar.button('清除聊天历史', on_click=clear_chat_history)
 
 # 创建日志记录器
@@ -84,7 +84,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
             logger.info("重新构造提示：完成")
         elif config.get('Model', 'selected_model') == 'Milvus':
             Milvus_TOP_K = config.getint('Milvus', 'top_k')
-            prompt_res = MilvusUtility().search_entity("poe", promt_embedding_res, ["classification", "description", "content", 'note', 'translate', 'author'])
+            prompt_res = MilvusUtility().search_entity("poe", promt_embedding_res)
             print(prompt_res)
             logger.info("从Milvus知识库中检索相关内容：完成")
             # 重新构造提示
@@ -93,7 +93,7 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
                 'description') + '\n【问题描述】' + item.entity.get('content') for i, item in enumerate(prompt_res[0])]
             contexts = ["对不起，知识库中没有符合您的问题的建议！"]
             if float(1 - prompt_res[0][0].distance) > recommend_degree:
-                contexts = ['\n```AI推荐度```\n\n' + str(1 - item.distance) + '\n\n```诗词分类```\n\n' + item.entity.get('classification') + '\n\n```诗文内容```\n\n' + item.entity.get('content').replace('。', '。\n\n') + '\n\n```译文```\n\n' + item.entity.get('translate').replace('。', '。\n\n') + '\n\n```注释```\n\n' + item.entity.get('note').replace('。', '。\n\n') + '\n\n```作者简介```\n\n' + item.entity.get('author').split('】')[1] + '\n\n```赏析```\n\n' + item.entity.get('description') for item in prompt_res[0]]
+                contexts = ['\n```AI推荐度```\n\n' + str(1 - item.distance) + '\n\n```诗词分类```\n\n' + item.entity.get('classification') + '\n\n```诗文内容```\n\n' + item.entity.get('content').replace('。', '。\n\n') + '\n\n```译文```\n\n' + item.entity.get('translate').replace('。', '。\n\n') + '\n\n```注释```\n\n' + item.entity.get('note').replace('。', '。\n\n') + '\n\n```作者简介```\n\n' + item.entity.get('author') + '\n\n```赏析```\n\n' + item.entity.get('description') for item in prompt_res[0]]
             logger.info(contexts)
             result = "\n【查询问题】 " + text + "\n=======================" + \
                      "\n=======================".join(contexts1) + "\n\n"
@@ -106,9 +106,12 @@ def preprocess_prompt(promt_embedding_res, text, namespace):
         logger.error("预处理提示时出现异常:", str(e))
         return None, None
 
+openai.api_base = "http://ai.hellopas.com:3000/v1"
+openai.api_key = "sk-2bH7CNR4jC3ZL00MF6BfFf5848A74c64A09c4d4eFeAf2d65"
+
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌的情景，最好能描述诗歌的真实内容和具体情境，我就会智能给你推荐哦！"}]
+    st.session_state.messages = [{"role": "assistant", "content": "您好，我是您学习古诗文的AI小助手**小诗**，请描述您想要的诗歌内容，我就会智能给你推荐哦。"}]
 
 # Display or clear chat messages
 for message in st.session_state.messages:
